@@ -1,18 +1,28 @@
 from flask import Flask
+from flask import render_template
 import pandas as pd
 from random import randint
+from json import dumps
+from plotly import utils
+import plotly.express as px
 
 app = Flask(__name__)
 
 
 @app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!'
+def root():
+    json_graph = dumps(serve_df_graph(), cls=utils.PlotlyJSONEncoder)
+    return render_template('index.html', graph=json_graph)
 
 
 @app.route('/data')
 def serve_df():
     return get_df().to_dict()
+
+
+def serve_df_graph():
+    fig = px.bar(get_df(), x='a', y='b')
+    return fig
 
 
 # get_df returns a dataframe object with two columns
