@@ -21,7 +21,7 @@ def serve_df():
 
 
 def serve_df_graph():
-    fig = px.bar(get_df(), x='a', y='b')
+    fig = px.scatter(get_df(), x='a', y='b')        # creates scatter plot from dataframe
     return fig
 
 
